@@ -14,13 +14,13 @@ int ofxEspeakSynth::synthcall(short *wav, int numsamples, espeak_EVENT *events)
 		setting.sample             = events->sample;
 		setting.user_data          = events->user_data;
 
-		ofLog()<<"Type::"<<events->type;
+		/*ofLog()<<"Type::"<<events->type;
 		ofLog()<<"Unique::"<<events->unique_identifier;
 		ofLog()<<"Text-position::"<<events->text_position;
 		ofLog()<<"Length::"<<events->length;
 		ofLog()<<"Audio-position::"<<events->audio_position;
 		ofLog()<<"Sample::"<<events->sample;
-		ofLog()<<"User-data::"<<events->user_data;
+		ofLog()<<"User-data::"<<events->user_data;*/
 
 		//ofNotifyEvent(OutputData, setting);
 
