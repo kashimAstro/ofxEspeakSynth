@@ -20,7 +20,6 @@ class ofApp : public ofBaseApp
 
 		void SynthData(ofxEspeakSynth::Synth & v)
 		{
-			ofLog()<<"pippo";
 		}
 
 		void draw()
