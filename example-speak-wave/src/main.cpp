@@ -9,13 +9,18 @@ class ofApp : public ofBaseApp
 		void setup()
 		{
 			ofxEspeakSynth::ESParam es;
-			es.language="en";
-			es.variant=0;
-			es.gender=2;
-			es.age=85;
+			es.language = "en";
+			es.variant  = 0;
+			es.gender   = 2;
+			es.age      = 85;
 
 			spk.setup(es);
-			//ofAddListener(,this,);
+			ofAddListener(spk.OutputData, this, &ofApp::SynthData);
+		}
+
+		void SynthData(ofxEspeakSynth::Synth & v)
+		{
+			ofLog()<<"pippo";
 		}
 
 		void draw()

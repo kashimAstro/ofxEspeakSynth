@@ -76,7 +76,7 @@ class ofxEspeakSynth : public ofThread
                   void* user_data                 = 0;
 	};
 
-	ofEvent<Synth> * OutputData;
+	ofEvent<Synth> OutputData;
 	espeak_POSITION_TYPE position_type;
 	espeak_AUDIO_OUTPUT output;
 	espeak_PARAMETER Parm;
@@ -92,7 +92,10 @@ class ofxEspeakSynth : public ofThread
         unsigned int flags;
         unsigned int *unique_identifier;
 
-	int * synthcall(short *wav, int numsamples, espeak_EVENT *events)
+	ofxEspeakSynth() { }
+	~ofxEspeakSynth() { }
+
+	static int synthcall(short *wav, int numsamples, espeak_EVENT *events)
         {
 			Synth setting;
 			setting.type               = events->type;
@@ -102,7 +105,17 @@ class ofxEspeakSynth : public ofThread
                   	setting.audio_position     = events->audio_position;
 	                setting.sample             = events->sample;
         	        setting.user_data          = events->user_data;
-			//ofNotifyEvent(OutputData,setting);
+
+			ofLog()<<"Type::"<<events->type;
+			ofLog()<<"Unique::"<<events->unique_identifier;
+			ofLog()<<"Text-position::"<<events->text_position;
+			ofLog()<<"Length::"<<events->length;
+			ofLog()<<"Audio-position::"<<events->audio_position;
+			ofLog()<<"Sample::"<<events->sample;
+			ofLog()<<"User-data::"<<events->user_data;
+
+			//ofNotifyEvent(labsInstance->touchEventDataEventDispatcher, event);
+
 			return 0;
         }
 
@@ -123,9 +136,7 @@ class ofxEspeakSynth : public ofThread
 		output = _es.output;
 
 		espeak_Initialize( output, Buflength, path, Options );
-
-	        //t_espeak_callback* cb = reinterpret_cast<t_espeak_callback*>(&synthcall);
-                //espeak_SetSynthCallback( cb );
+                espeak_SetSynthCallback( synthcall );
 
 		espeak_VOICE voice;
 	        memset(&voice, 0, sizeof(espeak_VOICE));
