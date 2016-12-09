@@ -76,7 +76,7 @@ class ofxEspeakSynth : public ofThread
                   void* user_data                 = 0;
 	};
 
-	ofEvent<Synth> OutputData;
+	static ofEvent<Synth> OutputData;
 	espeak_POSITION_TYPE position_type;
 	espeak_AUDIO_OUTPUT output;
 	espeak_PARAMETER Parm;
