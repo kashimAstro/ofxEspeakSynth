@@ -9,12 +9,12 @@ http://espeak.sourceforge.net/speak_lib.h
 Text to Speech synthesizer for openframeworks basic espeak.
 <br>
 <pre><code>
-	ofxEspeakSynth spk;
+ofxEspeakSynth spk;
 
-	ofxEspeakSynth::ESParam es;
-        es.language="en";
-        spk.setup(es);
-        spk.speak("Dario. Pluto. Paperino. Kashimastro. Openframeworks. Opengl. Synth. Voice.");
+ofxEspeakSynth::ESParam es;
+es.language="en";
+spk.setup(es);
+spk.speak("Openframeworks, Synth, Voice.");
 </code></pre>
 <br>
 <h1><b>Dependencies:</b></h1><br>
