@@ -96,7 +96,6 @@ class ofApp : public ofBaseApp
 			string s;
 			letter << d;
 			letter >> s;
-			ofLog()<<s;
 			spk.speak(s);
 		}
 

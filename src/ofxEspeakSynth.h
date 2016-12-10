@@ -48,11 +48,12 @@
 
 #include <espeak/speak_lib.h>
 #include "ofMain.h"
+#include "Utility.h"
 
 class ofxEspeakSynth : public ofThread
 {
 	public:
-
+	
 	struct ESParam
 	{
 		string name                = "espeak-default-name";
@@ -62,7 +63,36 @@ class ofxEspeakSynth : public ofThread
 		int gender          	   = 1;
 		int age             	   = 0;
 		int buflen                 = 500;
+		int option                 = 0;
+		int value                  = 20;
+		espeak_PARAMETER rate      = espeakWORDGAP;
 		espeak_AUDIO_OUTPUT output = AUDIO_OUTPUT_PLAYBACK;
+		/*
+		   parameter:
+		      espeakRATE:    speaking speed in word per minute.  Values 80 to 450.
+
+		      espeakVOLUME:  volume in range 0-200 or more.
+				     0=silence, 100=normal full volume, greater 
+				     values may produce amplitude compression or distortion
+
+		      espeakPITCH:   base pitch, range 0-100.  50=normal
+
+		      espeakRANGE:   pitch range, range 0-100. 0-monotone, 50=normal
+
+		      espeakPUNCTUATION: which punctuation characters to announce:
+			                 value in espeak_PUNCT_TYPE (none, all, some),
+                                         see espeak_GetParameter() to specify
+                                         which characters are announced.
+
+		      espeakCAPITALS: announce capital letters by:
+			 0=none,
+			 1=sound icon,
+			 2=spelling,
+			 3 or higher, by raising pitch.  This values
+                           gives the amount in Hz by which the pitch
+			   of a word raised to indicate it has a capital letter.
+
+		      espeakWORDGAP:  pause between words, units of 10mS (at the default speed)*/
 	};
 
 	struct Synth
@@ -74,8 +104,10 @@ class ofxEspeakSynth : public ofThread
                   int audio_position              = 0;
                   int sample                      = 0;
                   void* user_data                 = 0;
+		  short* wav                      = NULL;
+		  int numsamples                  = 0;  
 	};
-
+	static Utility utility;
 	static ofEvent<Synth> OutputData;
 	espeak_POSITION_TYPE position_type;
 	espeak_AUDIO_OUTPUT output;
@@ -86,17 +118,23 @@ class ofxEspeakSynth : public ofThread
 	char *path;
 	void *user_data;
 	string text;
+        static string phonefile;
+        static string wavefile;
+        static bool xregister;
 	unsigned int size;
 	unsigned int position;
         unsigned int end_position;
         unsigned int flags;
         unsigned int *unique_identifier;
+	espeak_PARAMETER rate;
+	int value;
 
 	ofxEspeakSynth();
 	~ofxEspeakSynth();
 	void exit();
 	void setup(ESParam _es);
 	void speak(string _text);
+	void setRegisterPhoneWave(string _phonefile, string _wavefile);
 
 	//
 	private:

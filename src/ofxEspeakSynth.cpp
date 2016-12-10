@@ -2,7 +2,12 @@
 
 ofxEspeakSynth::ofxEspeakSynth(){}
 ofxEspeakSynth::~ofxEspeakSynth(){}
+
 ofEvent<ofxEspeakSynth::Synth> ofxEspeakSynth::OutputData;
+Utility ofxEspeakSynth::utility;
+string ofxEspeakSynth::phonefile;
+string ofxEspeakSynth::wavefile;
+bool ofxEspeakSynth::xregister;
 
 int ofxEspeakSynth::synthcall(short *wav, int numsamples, espeak_EVENT *events)
 {
@@ -14,29 +19,48 @@ int ofxEspeakSynth::synthcall(short *wav, int numsamples, espeak_EVENT *events)
 		setting.audio_position     = events->audio_position;
 		setting.sample             = events->sample;
 		setting.user_data          = events->user_data;
+		setting.wav                = wav;
+		setting.numsamples         = numsamples;
 
 		ofNotifyEvent(ofxEspeakSynth::OutputData, setting);
 
+		if( xregister )
+		{
+			utility.waveRegister(phonefile, wavefile, wav, numsamples, events);
+		}
 		return 0;
+}
+
+void ofxEspeakSynth::setRegisterPhoneWave(string _phonefile, string _wavefile)
+{
+	phonefile = ofToDataPath(_phonefile,true);
+	wavefile  = ofToDataPath(_wavefile,true);
+	utility.opened(phonefile);
+	xregister = true;
 }
 
 void ofxEspeakSynth::exit()
 {
 	espeak_Terminate();
+	xregister = false;
 }
 
 void ofxEspeakSynth::setup(ESParam _es)
 {
 	Buflength    = _es.buflen;
-	Options      = 0;
+	Options      = _es.option;
 	path         = NULL;
 	position     = 0;
 	end_position = 0;
 	flags        = _es.flags;
+	rate         = _es.rate;
+	value        = _es.value;
 	
 	output = _es.output;
 
 	espeak_Initialize( output, Buflength, path, Options );
+	espeak_SetParameter(rate,value,0);
+
 	espeak_SetSynthCallback( synthcall );
 
 	espeak_VOICE voice;
