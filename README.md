@@ -9,5 +9,11 @@ http://espeak.sourceforge.net/speak_lib.h
 Text to Speech synthesizer for openframeworks basic espeak.
 
 <b>Dependencies:</b><br>
-
+<h1>Linux</h1><br>
 <code><pre>apt-get install libespeak-dev portaudio19-dev</pre></code>
+
+<h1>OSX</h1><br>
+http://sourceforge.net/projects/espeak/files/espeak/espeak-1.45/espeak-1.45.04-OSX.zip
+
+<h1>Windows</h1><br>
+http://sourceforge.net/projects/espeak/files/espeak/espeak-1.48/setup_espeak-1.48.04.exe
