@@ -16,10 +16,11 @@ es.language="en";
 spk.setup(es);
 spk.speak("Openframeworks, Synth, Voice.");
 </code></pre>
+
 <br>
 <h1><b>Dependencies:</b></h1><br>
 <h1>Linux</h1><br>
-<code><pre>apt-get install libespeak-dev portaudio19-dev</pre></code>
+<pre><code>apt-get install libespeak-dev portaudio19-dev</code></pre>
 
 <h1>OSX</h1><br>
 http://sourceforge.net/projects/espeak/files/espeak/espeak-1.45/espeak-1.45.04-OSX.zip
